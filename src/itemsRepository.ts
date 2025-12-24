@@ -1,7 +1,7 @@
 import {Pool} from "pg";
 import type {Item} from "./item.js";
 
-export class ItemsRepository {
+class ItemsRepository {
   private pool: Pool;
 
   constructor() {
@@ -24,6 +24,11 @@ export class ItemsRepository {
       "INSERT INTO items(title, body) VALUES($1, $2) RETURNING *",
       [item.title, item.body]
     );
+
     return result.rows[0];
   }
 }
+
+const itemsRepository = new ItemsRepository();
+
+export {itemsRepository};
