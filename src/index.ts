@@ -2,6 +2,8 @@ import express, {type Request, type Response} from "express";
 import {ItemsRepository} from "./itemsRepository.js";
 
 const app = express();
+app.use(express.json());
+
 const PORT = 3000;
 
 const itemsRepository = new ItemsRepository();
