@@ -29,7 +29,11 @@ class ItemsRepository {
   }
 
   async deleteItem(itemId: string) {
-    await this.pool.query("DELETE FROM items WHERE id = $1", [itemId]);
+    const result = await this.pool.query<Item>(
+      "DELETE FROM items WHERE id = $1 RETURNING *",
+      [itemId]
+    );
+    return result.rows[0];
   }
 }
 

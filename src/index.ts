@@ -29,9 +29,7 @@ app.delete("/api/items/:itemId", async (req: Request, res: Response) => {
   const itemId = req.params.itemId as string;
 
   const item = await itemsRepository.deleteItem(itemId);
-  await auditLogClient.addAuditLog("item.deleted", {
-    itemId,
-  });
+  await auditLogClient.addAuditLog("item.deleted", item);
   res.status(204).send({});
 });
 
