@@ -29,7 +29,7 @@ class ItemsRepository {
   }
 
   async deleteItem(itemId: string) {
-    await this.pool.query<Item>("DELETE items WHERE id = $1", [itemId]);
+    await this.pool.query("DELETE FROM items WHERE id = $1", [itemId]);
   }
 }
 
