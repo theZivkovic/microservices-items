@@ -13,11 +13,11 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).send({});
 });
 
-app.get("/items", async (req: Request, res: Response) => {
+app.get("/api/items", async (req: Request, res: Response) => {
   res.send(await itemsRepository.getItems());
 });
 
-app.post("/items", async (req: Request, res: Response) => {
+app.post("/api/items", async (req: Request, res: Response) => {
   const item = await itemsRepository.addItem({
     title: req.body.title,
     body: req.body.body,
