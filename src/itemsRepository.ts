@@ -1,7 +1,8 @@
-const {Pool} = require("pg");
+import {Pool} from "pg";
+import type {Item} from "./item.js";
 
 export class ItemsRepository {
-  private pool: any;
+  private pool: Pool;
 
   constructor() {
     this.pool = new Pool({
@@ -11,5 +12,18 @@ export class ItemsRepository {
       password: process.env.POSTGRES_PASSWORD,
       port: parseInt(process.env.POSTGRES_PORT || "5432", 10),
     });
+  }
+
+  async getItems() {
+    const result = await this.pool.query<Item>("select * from items");
+    return result.rows;
+  }
+
+  async addItem(item: Omit<Item, "id" | "created_at" | "updated_at">) {
+    const result = await this.pool.query<Item>(
+      "INSERT INTO items(title, body) VALUES($1, $2) RETURNING *",
+      [item.title, item.body]
+    );
+    return result.rows[0];
   }
 }
