@@ -22,7 +22,17 @@ app.post("/api/items", async (req: Request, res: Response) => {
     body: req.body.body,
   });
   await auditLogClient.addAuditLog("item.created", item);
-  res.send(item);
+  res.status(201).send(item);
+});
+
+app.delete("/api/items/:itemId", async (req: Request, res: Response) => {
+  const itemId = req.params.itemId as string;
+
+  const item = await itemsRepository.deleteItem(itemId);
+  await auditLogClient.addAuditLog("item.deleted", {
+    itemId,
+  });
+  res.status(204).send({});
 });
 
 app.listen(PORT, () => {
