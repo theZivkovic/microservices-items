@@ -8,6 +8,10 @@ public static class ItemsController
 {
     public static void BuildEndpoints(WebApplication app)
     {
+        app.MapGet("/", () =>
+        {
+            return Results.Ok("");
+        });
         app.MapGet("/api/items", async (IGetItemsUseCase getItemsUseCase) =>
         {
             return (await getItemsUseCase.Execute(new object())).ToResponse();
