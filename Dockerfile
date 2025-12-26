@@ -15,6 +15,6 @@ WORKDIR /app
 
 COPY --from=build /app/out ./
 
-EXPOSE 80
+EXPOSE 3000
 
-ENTRYPOINT ["dotnet", "items-api.dll", "--urls", "http://0.0.0.0:80"]
+ENTRYPOINT ["dotnet", "items-api.dll", "--urls", "http://0.0.0.0:3000"]
