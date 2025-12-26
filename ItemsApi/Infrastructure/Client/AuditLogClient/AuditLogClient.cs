@@ -1,5 +1,6 @@
 namespace Infrastructure.Client;
 
+using System.Text.Json;
 using Domain.Enums;
 using Domain.Interfaces.Clients;
 using Domain.Models;

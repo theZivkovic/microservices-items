@@ -11,11 +11,6 @@ public static class PresentationDIBuilder
             builder.Configuration.GetSection(nameof(AppSettings))
         );
 
-        builder.Services.AddHttpClient<IAuditLogClient, AuditLogClient>(client =>
-        {
-            client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("AppSettings:AuditLogService:BaseUrl")!);
-        });
-
         builder.Services.AddOpenApi();
     }
 }

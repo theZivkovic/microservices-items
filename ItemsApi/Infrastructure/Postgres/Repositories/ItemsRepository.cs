@@ -1,4 +1,5 @@
 
+using System.Text.Json;
 using Domain;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
@@ -12,7 +13,8 @@ public class ItemsRepository(ItemsDbContext dbContext) : IItemsRepository
 
     public async Task<Result<Item>> AddItem(Item item)
     {
-        dbContext.Items.Add(ItemModel.FromDomain(item));
+        var itemModel = ItemModel.FromDomain(item);
+        dbContext.Items.Add(itemModel);
         await dbContext.SaveChangesAsync();
         return Result<Item>.Success(item);
     }
