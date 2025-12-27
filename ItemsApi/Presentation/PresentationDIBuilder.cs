@@ -1,5 +1,6 @@
 using Domain.Interfaces.Clients;
 using Infrastructure.Client;
+using Serilog;
 
 namespace Presentation;
 
@@ -12,5 +13,9 @@ public static class PresentationDIBuilder
         );
 
         builder.Services.AddOpenApi();
+        builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+        {
+            loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
+        });
     }
 }

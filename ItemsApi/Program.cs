@@ -1,5 +1,6 @@
 using Infrastructure;
 using Presentation;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,5 +18,6 @@ if (app.Environment.IsDevelopment())
 ItemsController.BuildEndpoints(app);
 
 app.UseHttpsRedirection();
+app.UseSerilogRequestLogging();
 
 app.Run();
