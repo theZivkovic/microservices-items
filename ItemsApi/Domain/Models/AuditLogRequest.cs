@@ -7,10 +7,10 @@ using Domain.Enums;
 public record AuditLogRequest
 {
     [JsonPropertyName("event_type")]
-    public AuditLogEventType EventType;
+    public AuditLogEventType EventType { get; set; }
 
     [JsonPropertyName("payload")]
-    public Item Payload;
+    public Item Payload { get; set; }
 
     private AuditLogRequest(Item payload, AuditLogEventType eventType)
     {
