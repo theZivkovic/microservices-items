@@ -22,6 +22,11 @@ public static class InfrastructureDIBuilder
         builder.Services.AddHttpClient<IAuditLogClient, AuditLogClient>(client =>
         {
             client.BaseAddress = new Uri(builder.Configuration["AppSettings:AuditLogService:BaseUrl"] ?? "http://microservices-audit-logs:3000");
+            if (builder.Environment.IsDevelopment())
+            {
+                // special host for local testing with Kubernetes
+                client.DefaultRequestHeaders.Host = "test.local";
+            }
         });
     }
 }
