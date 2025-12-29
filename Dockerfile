@@ -1,20 +1,15 @@
-# Stage 1: Build
+# Build and publish stage
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-WORKDIR /app
-
-COPY ItemsApi/ ./ItemsApi/
-
-WORKDIR /app/ItemsApi
-
+WORKDIR /build
+COPY ./ItemsApi/items-api.csproj .
 RUN dotnet restore
-RUN dotnet publish -c Release -o /app/out
+COPY ./ItemsApi/src/ ./src/
+COPY ./ItemsApi/appsettings.json .
+RUN dotnet publish -c Release -o ./publish
 
-# Stage 2: Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+# Run stage
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
-
-COPY --from=build /app/out ./
-
 EXPOSE 3000
-
+COPY --from=build /build/publish .
 ENTRYPOINT ["dotnet", "items-api.dll", "--urls", "http://0.0.0.0:3000"]
