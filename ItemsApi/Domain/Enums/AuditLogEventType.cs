@@ -1,11 +1,11 @@
 namespace Domain.Enums;
 
-using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 public enum AuditLogEventType
 {
-    [Description("item.created")]
+    [JsonStringEnumMemberName("item.created")]
     ItemCreated,
-    [Description("item.deleted")]
+    [JsonStringEnumMemberName("item.deleted")]
     ItemDeleted
 }
