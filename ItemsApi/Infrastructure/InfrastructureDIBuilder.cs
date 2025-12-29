@@ -21,7 +21,7 @@ public static class InfrastructureDIBuilder
         builder.Services.AddScoped<IAuditLogClient, AuditLogClient>();
         builder.Services.AddHttpClient<IAuditLogClient, AuditLogClient>(client =>
         {
-            client.BaseAddress = new Uri(builder.Configuration["AppSettings:AuditLogService:BaseUrl"]);
+            client.BaseAddress = new Uri(builder.Configuration["AppSettings:AuditLogService:BaseUrl"] ?? "http://microservices-audit-logs:3000");
         });
     }
 }
