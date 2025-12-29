@@ -22,8 +22,8 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/microservices-items:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/microservices-items:buildcache,mode=max
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/microservices-items:buildcache-${{github.ref_name}}
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/microservices-items:buildcache-${{github.ref_name}},mode=max
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/microservices-items:latest
