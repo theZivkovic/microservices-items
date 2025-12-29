@@ -1,5 +1,3 @@
-
-using System.Text.Json;
 using Domain;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
@@ -21,12 +19,13 @@ public class ItemsRepository(ItemsDbContext dbContext) : IItemsRepository
 
     public async Task<Result<Item>> DeleteItem(string itemId)
     {
-        var foundItem = await dbContext.Items.FindAsync(itemId);
+        var foundItem = await dbContext.Items.FindAsync(Guid.Parse(itemId));
 
         if (foundItem == null)
         {
             return Result<Item>.Failure(ErrorCode.ItemNotFound);
         }
+
         dbContext.Items.Remove(foundItem);
         await dbContext.SaveChangesAsync();
         return Result<Item>.Success(foundItem.ToDomain().Value!);
