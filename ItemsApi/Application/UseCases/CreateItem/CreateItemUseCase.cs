@@ -29,7 +29,7 @@ public class CreateItemUseCase(
             return addItemResult;
         }
 
-        await auditLogClient.AddItemEvent(AuditLogEventType.ItemCreated, addItemResult.Value!);
+        await auditLogClient.AddItemEvent(AuditLogEventType.ItemCreated, itemResult.Value!);
 
         return addItemResult;
     }

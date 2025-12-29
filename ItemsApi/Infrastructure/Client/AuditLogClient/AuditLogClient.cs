@@ -9,7 +9,7 @@ public class AuditLogClient(HttpClient httpClient) : IAuditLogClient
 {
     public async Task AddItemEvent(AuditLogEventType eventType, Item item)
     {
-        using var response = await httpClient.PostAsJsonAsync("/api/audit-logs", AuditLogRequest.Create(item, eventType));
+        using var response = await httpClient.PostAsJsonAsync("/api/audit-logs", AuditLogRequest.Create(item, eventType).Value!);
         response.EnsureSuccessStatusCode();
     }
 }
