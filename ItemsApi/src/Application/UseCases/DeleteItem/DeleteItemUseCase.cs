@@ -9,6 +9,7 @@ using Domain.Models;
 public interface IDeleteItemUseCase : IUseCase<string, Item> { }
 public class DeleteItemUseCase(
     IItemsRepository ItemsRepository,
+    ILogger<DeleteItemUseCase> logger,
     IAuditLogClient auditLogClient) : IDeleteItemUseCase
 {
 
@@ -23,6 +24,7 @@ public class DeleteItemUseCase(
 
         await auditLogClient.AddItemEvent(AuditLogEventType.ItemDeleted, deleteItemResult.Value!);
 
+        logger.LogInformation("Item {itemId} deleted", itemId);
         return deleteItemResult;
     }
 }
