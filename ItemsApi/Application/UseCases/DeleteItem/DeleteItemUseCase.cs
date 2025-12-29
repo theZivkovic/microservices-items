@@ -21,7 +21,7 @@ public class DeleteItemUseCase(
             return deleteItemResult;
         }
 
-        await auditLogClient.AddItemEvent(AuditLogEventType.ItemCreated, deleteItemResult.Value!);
+        await auditLogClient.AddItemEvent(AuditLogEventType.ItemDeleted, deleteItemResult.Value!);
 
         return deleteItemResult;
     }

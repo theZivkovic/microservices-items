@@ -22,5 +22,10 @@ public static class ItemsController
         {
             return (await createItemUseCase.Execute(request)).ToResponse();
         }).WithName("Create Item");
+
+        app.MapDelete("/api/items/{itemId}", async (string itemId, IDeleteItemUseCase deleteItemUseCase) =>
+        {
+            return (await deleteItemUseCase.Execute(itemId)).ToResponse();
+        }).WithName("Create Item");
     }
 }
