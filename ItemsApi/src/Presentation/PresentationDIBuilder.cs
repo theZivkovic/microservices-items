@@ -1,6 +1,10 @@
 using Domain.Interfaces.Clients;
 using Infrastructure.Client;
 using Serilog;
+using FluentValidation;
+using System.Reflection;
+using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
+
 
 namespace Presentation;
 
@@ -17,5 +21,8 @@ public static class PresentationDIBuilder
         {
             loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
         });
+
+        builder.Services.AddFluentValidationAutoValidation();
+        builder.Services.AddValidatorsFromAssemblyContaining<Program>();
     }
 }
