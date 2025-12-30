@@ -1,15 +1,22 @@
 namespace Application.UseCases.GetItems;
 
 using Domain;
+using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-public interface IGetItemsUseCase : IUseCase<object, List<Item>> { }
-public class GetItemsUseCase(IItemsRepository ItemsRepository) : IGetItemsUseCase
+public interface IGetItemsUseCase : IUseCase<PagedListRequestDto, IPagedList<Item>> { }
+public class GetItemsUseCase(IItemsRepository ItemsRepository, IPagedListFactory<Item> ItemListFactory) : IGetItemsUseCase
 {
-    public async Task<Result<List<Item>>> Execute(object input)
+    public async Task<Result<IPagedList<Item>>> Execute(PagedListRequestDto input)
     {
-        return await ItemsRepository.GetItemsQuery().MapAsync(x => x.ToListAsync());
+        var pagedList = await ItemListFactory.CreateAsync(
+            ItemsRepository.GetItemsQuery().Value!,
+            input.PageNumber,
+            input.PageSize
+        );
+
+        return Result<IPagedList<Item>>.Success(pagedList);
     }
 }

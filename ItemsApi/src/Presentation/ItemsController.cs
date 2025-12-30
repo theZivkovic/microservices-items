@@ -16,9 +16,10 @@ public static class ItemsController
         {
             return Results.Ok("");
         });
-        allEndpoints.MapGet("/api/items", async (IGetItemsUseCase getItemsUseCase) =>
+
+        allEndpoints.MapGet("/api/items", async (IGetItemsUseCase getItemsUseCase, PagedListRequestDto pagedListRequest) =>
         {
-            return (await getItemsUseCase.Execute(new object())).ToResponse();
+            return (await getItemsUseCase.Execute(pagedListRequest)).ToResponse();
         }).WithName("Get Items");
 
         allEndpoints.MapPost("/api/items", async (CreateItemRequestDto request, ICreateItemUseCase createItemUseCase) =>

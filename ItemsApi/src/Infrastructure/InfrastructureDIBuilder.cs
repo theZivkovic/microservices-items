@@ -5,6 +5,7 @@ using Infrastructure.Client;
 using Infrastructure.Postgres;
 using Infrastructure.Postgres.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Domain.Models;
 
 namespace Infrastructure;
 
@@ -19,6 +20,8 @@ public static class InfrastructureDIBuilder
 
         builder.Services.AddScoped<IItemsRepository, ItemsRepository>();
         builder.Services.AddScoped<IAuditLogClient, AuditLogClient>();
+        builder.Services.AddScoped<IPagedListFactory<Item>, PgPagedListFactory<Item>>();
+
         builder.Services.AddHttpClient<IAuditLogClient, AuditLogClient>(client =>
         {
             client.BaseAddress = new Uri(builder.Configuration["AppSettings:AuditLogService:BaseUrl"] ?? "http://microservices-audit-logs:3000");

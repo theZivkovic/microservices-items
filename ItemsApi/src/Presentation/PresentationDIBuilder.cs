@@ -4,6 +4,9 @@ using Serilog;
 using FluentValidation;
 using System.Reflection;
 using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
+using Domain;
+using Application.UseCases.GetItems;
+using Domain.Constants;
 
 
 namespace Presentation;
@@ -21,6 +24,18 @@ public static class PresentationDIBuilder
         {
             loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
         });
+
+        builder.Services.AddScoped(provider =>
+        {
+            var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
+            var httpContext = httpContextAccessor.HttpContext;
+            if (httpContext?.Items["PagedListRequest"] is PagedListRequestDto request)
+            {
+                return request;
+            }
+            return new PagedListRequestDto(PaginationConstants.DefaultPageNumber, PaginationConstants.DefaultPageSize);
+        });
+        builder.Services.AddHttpContextAccessor(); // Required for IHttpContextAccessor
 
         builder.Services.AddFluentValidationAutoValidation();
         builder.Services.AddValidatorsFromAssemblyContaining<Program>();

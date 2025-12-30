@@ -14,10 +14,10 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
-ItemsController.BuildEndpoints(app);
-
+app.UseMiddleware<PaginationMiddleware>();
 app.UseHttpsRedirection();
 app.UseSerilogRequestLogging();
+
+ItemsController.BuildEndpoints(app);
 
 app.Run();
